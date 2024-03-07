@@ -2,7 +2,7 @@ package br.com.api.moviefinder.application.services
 
 import br.com.api.moviefinder.domain.model.Movie
 import br.com.api.moviefinder.domain.model.MovieRepresentation
-import br.com.api.moviefinder.infrastructure.Mappers
+import br.com.api.moviefinder.infrastructure.outgoing.repository.Mappers
 import br.com.api.moviefinder.infrastructure.outgoing.OMDBApi.OMDBApiAdapter
 import br.com.api.moviefinder.infrastructure.outgoing.repository.MongoAdapter
 import org.springframework.stereotype.Service
@@ -23,16 +23,12 @@ class MovieService(
         return movies
     }
 
-    suspend fun getMovieById(imdbID: String): Movie? =
+    suspend fun getMovieById(imdbID: String): Movie =
         mongoAdapter.findByImdbID(imdbID)
 
     suspend fun findMovie(title: String): Movie {
         val correctTitle = correctTitle(title)
-        try {
-            return api.findMovie(correctTitle)
-        } catch (ex: Exception) {
-            throw ex
-        }
+        return api.findMovie(correctTitle)
     }
 
     suspend fun correctTitle(title: String): String{
@@ -45,6 +41,7 @@ class MovieService(
                 mappers.mapApiMovieToMovieEntity(movie)
             )
 
-    suspend fun deleteMovie(imdbID: String) =
+    suspend fun deleteMovie(imdbID: String) {
         mongoAdapter.deleteByImdbID(imdbID)
+    }
 }

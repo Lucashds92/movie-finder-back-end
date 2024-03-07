@@ -17,7 +17,7 @@ class MovieRestAdapter(
     }
 
     @GetMapping("/id/{imdbID}")
-    suspend fun getMovieById(@PathVariable imdbID: String): Movie? {
+    suspend fun getMovieById(@PathVariable imdbID: String): Movie {
         return service.getMovieById(imdbID)
     }
 
