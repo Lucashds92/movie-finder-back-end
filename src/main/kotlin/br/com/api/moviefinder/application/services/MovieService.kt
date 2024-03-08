@@ -3,7 +3,7 @@ package br.com.api.moviefinder.application.services
 import br.com.api.moviefinder.domain.model.Movie
 import br.com.api.moviefinder.domain.model.MovieRepresentation
 import br.com.api.moviefinder.infrastructure.outgoing.repository.Mappers
-import br.com.api.moviefinder.infrastructure.outgoing.OMDBApi.OMDBApiAdapter
+import br.com.api.moviefinder.infrastructure.outgoing.omdbApi.OMDBApiAdapter
 import br.com.api.moviefinder.infrastructure.outgoing.repository.MongoAdapter
 import org.springframework.stereotype.Service
 

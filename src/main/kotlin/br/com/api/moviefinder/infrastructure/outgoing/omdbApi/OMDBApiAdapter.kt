@@ -1,4 +1,4 @@
-package br.com.api.moviefinder.infrastructure.outgoing.OMDBApi
+package br.com.api.moviefinder.infrastructure.outgoing.omdbApi
 
 import br.com.api.moviefinder.domain.model.Movie
 import org.springframework.http.HttpHeaders
