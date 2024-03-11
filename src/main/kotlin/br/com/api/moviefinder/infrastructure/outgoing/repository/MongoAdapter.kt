@@ -3,12 +3,14 @@ package br.com.api.moviefinder.infrastructure.outgoing.repository
 import br.com.api.moviefinder.application.exceptions.NotFoundException
 import br.com.api.moviefinder.application.interfaces.MovieApplicationInterface
 import br.com.api.moviefinder.domain.model.Movie
+import br.com.api.moviefinder.domain.model.User
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Component
 
 @Component
 class MongoAdapter(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val userRepository: UserRepository
 ): MovieApplicationInterface {
 
     override suspend fun findAll(): List<Movie> =
@@ -25,4 +27,12 @@ class MongoAdapter(
     override suspend fun deleteByImdbID(imdbID: String): Movie? =
         movieRepository.deleteByImdbID(imdbID)
             .awaitSingleOrNull() ?: throw NotFoundException("MongoAdapter::deleteByImdbID: Movie not found with IMDB ID: $imdbID")
+
+    suspend fun findByUserName(userName: String): User =
+        userRepository.findByUserName(userName)
+            .awaitSingleOrNull() ?: throw NotFoundException("MongoAdapter::findByUsername: User not found with username: $userName")
+
+    suspend fun registerUser(user: User): User =
+        userRepository.save(user)
+            .awaitSingleOrNull() ?: throw NotFoundException("MongoAdapter::registerUser: Could not register user with username: ${user.userName}")
 }
