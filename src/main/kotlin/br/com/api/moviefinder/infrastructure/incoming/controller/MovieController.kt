@@ -1,4 +1,4 @@
-package br.com.api.moviefinder.infrastructure.incoming
+package br.com.api.moviefinder.infrastructure.incoming.controller
 
 import br.com.api.moviefinder.application.services.MovieService
 import br.com.api.moviefinder.domain.model.Movie
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/v1/movies")
-class MovieRestAdapter(
+class MovieController(
     private val service: MovieService
 ) {
 
