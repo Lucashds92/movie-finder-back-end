@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<kotlin.version>1.9.22</kotlin.version>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 	</properties>
 	<dependencies>
@@ -71,11 +71,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Spring Boot Starter Security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+
 	</dependencies>
 
 	<build>

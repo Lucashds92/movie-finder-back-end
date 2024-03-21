@@ -1,18 +1,24 @@
 package br.com.api.moviefinder.application.services
 
+import br.com.api.moviefinder.application.interfaces.UserInterface
+import br.com.api.moviefinder.domain.model.Movie
 import br.com.api.moviefinder.domain.model.User
 import br.com.api.moviefinder.domain.model.UserRepresentation
-import br.com.api.moviefinder.infrastructure.outgoing.repository.MongoAdapter
-import org.springframework.stereotype.Service
 
-@Service
 class UserService(
-    private val mongoAdapter: MongoAdapter
+    private val userInterface: UserInterface
 ) {
     suspend fun getUser(userName: String): UserRepresentation =
-        UserRepresentation(mongoAdapter.findByUserName(userName))
+        UserRepresentation(userInterface.findByUserName(userName))
 
     suspend fun registerUser(user: User) {
-        mongoAdapter.registerUser(user)
+        userInterface.registerUser(user)
     }
+
+    suspend fun favoriteMovie(username: String, movie: Movie) {
+        userInterface.addFavoriteMovie(username, movie)
+    }
+
+    suspend fun deleteMovie(imdbID: String, username: String) =
+        userInterface.deleteByImdbID(imdbID, username)
 }
