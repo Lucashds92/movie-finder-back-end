@@ -1,17 +1,19 @@
 package br.com.api.moviefinder.infrastructure.outgoing.repository
 
-import br.com.api.moviefinder.domain.model.Movie
+import br.com.api.moviefinder.infrastructure.incoming.model.MovieEntity
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
+import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
-interface MovieRepository: ReactiveMongoRepository<Movie, String> {
+@Repository
+interface MovieRepository : ReactiveMongoRepository<MovieEntity, String> {
 
-    override fun findAll(): Flux<Movie>
+    override fun findAll(): Flux<MovieEntity>
 
-    fun findByImdbID(imdbID: String): Mono<Movie>
+    fun findByImdbID(imdbID: String): Mono<MovieEntity>
 
-    fun save(movie: Movie): Mono<Movie>
+    fun save(movieEntity: MovieEntity): Mono<MovieEntity>
 
-    fun deleteByImdbID(imdbID: String): Mono<Movie>
+    fun findByTitle(title: String): Mono<MovieEntity>
 }

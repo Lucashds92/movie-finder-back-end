@@ -1,8 +1,14 @@
 package br.com.api.moviefinder.infrastructure.incoming.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
-data class MovieOMDB(
+@Document(collection = "movie")
+data class MovieEntity(
+    @Id
+    val id: String? = null,
+
     @JsonProperty("Title")
     val title: String? = null,
 

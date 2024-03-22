@@ -1,31 +1,15 @@
 package br.com.api.moviefinder.infrastructure.outgoing.omdbApi
 
+import br.com.api.moviefinder.application.interfaces.OMDBApiInterface
 import br.com.api.moviefinder.domain.model.Movie
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
+import br.com.api.moviefinder.infrastructure.outgoing.mappers.Mappers
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.awaitBody
 
 @Component
-class OMDBApiAdapter {
-
-    private val apikey = "954ab431"
-    private val webClient = WebClient.builder()
-        .baseUrl("https://www.omdbapi.com")
-        .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-        .build()
-
-    suspend fun findMovie(title: String): Movie {
-        try {
-            return webClient
-                .get()
-                .uri("/?t=$title&apikey=$apikey")
-                .retrieve()
-                .awaitBody()
-        } catch (ex: Exception) {
-            throw ex
-        }
-    }
-
+class OMDBApiAdapter(
+    private val omdbApi: OMDBApi,
+    private val mappers: Mappers
+): OMDBApiInterface {
+    override suspend fun findMovie(title: String): Movie =
+        mappers.mapMovieEntityToMovie(omdbApi.findMovie(title))
 }
